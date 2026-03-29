@@ -1,10 +1,10 @@
 export default function Tips() {
   return (
     <div style={{ padding: "40px 20px", maxWidth: "1200px", margin: "auto" }}>
-      <h2 style={{ textAlign: "center", fontSize: "36px", color: "#1f2937", marginBottom: "10px" }}>
+      <h2 style={{ textAlign: "center", fontSize: "36px", color: "var(--text-color)", marginBottom: "10px" }}>
         🌍 Understanding Your Carbon Footprint
       </h2>
-      <p style={{ textAlign: "center", color: "#6b7280", fontSize: "18px", marginBottom: "40px" }}>
+      <p style={{ textAlign: "center", color: "var(--text-color)", opacity: 0.8, fontSize: "18px", marginBottom: "40px" }}>
         Small steps can make a massive difference for our planet. Here is how it all works.
       </p>
 
@@ -47,11 +47,11 @@ export default function Tips() {
 }
 
 const cardStyle = {
-  background: "#ffffff",
+  background: "var(--card-bg)",
   borderRadius: "16px",
   padding: "30px",
   boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
   cursor: "default",
   display: "flex",
   flexDirection: "column",
@@ -66,13 +66,14 @@ const iconStyle = {
 
 const titleStyle = {
   fontSize: "22px",
-  color: "#111827",
+  color: "var(--text-color)",
   marginBottom: "15px",
   fontWeight: "600"
 };
 
 const descStyle = {
-  color: "#4b5563",
+  color: "var(--text-color)",
+  opacity: 0.9,
   fontSize: "16px",
   lineHeight: "1.6"
 };
@@ -81,7 +82,8 @@ const listStyle = {
   listStyleType: "none",
   padding: 0,
   margin: 0,
-  color: "#4b5563",
+  color: "var(--text-color)",
+  opacity: 0.9,
   fontSize: "16px",
   lineHeight: "1.8",
   textAlign: "left",

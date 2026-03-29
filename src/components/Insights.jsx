@@ -61,43 +61,43 @@ export default function Insights() {
   let momReduction = 0;
 
   if (records.length === 0) {
-    // Demo mode
-    monthlyLabels = ["Jan", "Feb", "Mar"];
-    monthlyTotals = [120, 110, 95];
-    currentMonthTotal = 95;
-    previousMonthTotal = 110;
-    momReduction = ((110 - 95) / 110) * 100;
+    return (
+      <section style={{ padding: "60px 20px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "32px", marginBottom: "20px" }}>Your Carbon Insights</h2>
+        <div style={cardStyle}>
+          <p style={{ opacity: 0.8, fontSize: "18px" }}>
+            No data available yet. Calculate your footprint to start seeing insights!
+          </p>
+        </div>
+      </section>
+    );
+  }
 
-    monthlyLabels.forEach((m, i) => {
-      monthlyDataMap[m] = { total: monthlyTotals[i] };
-    });
-  } else {
-    sortedRecords = [...records].sort((a, b) => new Date(a.date) - new Date(b.date));
+  sortedRecords = [...records].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    sortedRecords.forEach(record => {
-      const d = new Date(record.date);
-      const month = !isNaN(d)
-        ? d.toLocaleDateString("en-US", { month: "short" })
-        : "Unknown";
+  sortedRecords.forEach(record => {
+    const d = new Date(record.date);
+    const month = !isNaN(d)
+      ? d.toLocaleDateString("en-US", { month: "short" })
+      : "Unknown";
 
-      if (!monthlyDataMap[month]) {
-        monthlyDataMap[month] = { total: 0 };
-      }
+    if (!monthlyDataMap[month]) {
+      monthlyDataMap[month] = { total: 0 };
+    }
 
-      monthlyDataMap[month].total += (record.totalCO2 || Number(record.total) || 0);
-    });
+    monthlyDataMap[month].total += (record.totalCO2 || Number(record.total) || 0);
+  });
 
-    monthlyLabels = Object.keys(monthlyDataMap);
-    monthlyTotals = monthlyLabels.map(m => monthlyDataMap[m].total);
+  monthlyLabels = Object.keys(monthlyDataMap);
+  monthlyTotals = monthlyLabels.map(m => monthlyDataMap[m].total);
 
-    if (monthlyTotals.length >= 2) {
-      currentMonthTotal = monthlyTotals[monthlyTotals.length - 1];
-      previousMonthTotal = monthlyTotals[monthlyTotals.length - 2];
+  if (monthlyTotals.length >= 2) {
+    currentMonthTotal = monthlyTotals[monthlyTotals.length - 1];
+    previousMonthTotal = monthlyTotals[monthlyTotals.length - 2];
 
-      if (previousMonthTotal > 0) {
-        momReduction =
-          ((previousMonthTotal - currentMonthTotal) / previousMonthTotal) * 100;
-      }
+    if (previousMonthTotal > 0) {
+      momReduction =
+        ((previousMonthTotal - currentMonthTotal) / previousMonthTotal) * 100;
     }
   }
 
@@ -109,10 +109,11 @@ export default function Insights() {
       {
         label: "Monthly Footprint (kg CO₂)",
         data: monthlyTotals,
-        backgroundColor: isImproving
-          ? "rgba(16, 185, 129, 0.7)"
-          : "rgba(239, 68, 68, 0.7)",
+        backgroundColor: monthlyLabels.length >= 2
+          ? (isImproving ? "rgba(16, 185, 129, 0.7)" : "rgba(239, 68, 68, 0.7)")
+          : "rgba(59, 130, 246, 0.7)", // Neutral blue for the first month
         borderRadius: 6,
+        maxBarThickness: 60, // Fix 'pura green hi hai' full-width issue
       },
     ],
   };
@@ -142,6 +143,7 @@ export default function Insights() {
           "#34d399",
           "#a78bfa",
         ],
+        borderWidth: 0,
       },
     ],
   };
@@ -153,9 +155,7 @@ export default function Insights() {
       </h2>
 
       <p style={{ textAlign: "center", marginBottom: "40px", opacity: 0.8 }}>
-        {records.length === 0
-          ? "Example demo history (Start calculating to see your real data!)"
-          : "Discover patterns and opportunities to reduce your impact"}
+        Discover patterns and opportunities to reduce your impact
       </p>
 
       {/* SUMMARY */}
@@ -176,7 +176,7 @@ export default function Insights() {
               ))}
             </div>
 
-            <div style={improveCard(isImproving)}>
+            <div style={improveCard(monthlyLabels.length >= 2 ? isImproving : null)}>
               {monthlyLabels.length >= 2 ? (
                 <>
                   <div style={improveText(isImproving)}>
@@ -190,7 +190,12 @@ export default function Insights() {
                   </p>
                 </>
               ) : (
-                <p>Need more data</p>
+                <div style={{ textAlign: "center", color: "var(--text-color)" }}>
+                  <div style={{ fontSize: "28px", fontWeight: "bold", color: "#3b82f6", marginBottom: "5px" }}>
+                    🌱 Start
+                  </div>
+                  <p style={{ margin: 0, opacity: 0.8, fontSize: "14px" }}>First month tracked!<br />Keep logging to see trends.</p>
+                </div>
               )}
             </div>
           </div>
@@ -201,12 +206,26 @@ export default function Insights() {
       <div style={grid}>
         <div style={cardStyle}>
           <h3>Monthly Comparison</h3>
-          <Bar data={barData} />
+          <div style={{ height: "300px" }}>
+            <Bar data={barData} options={{
+              maintainAspectRatio: false,
+              scales: {
+                x: { ticks: { color: "var(--text-color)" }, grid: { color: "rgba(156, 163, 175, 0.2)" } },
+                y: { ticks: { color: "var(--text-color)" }, grid: { color: "rgba(156, 163, 175, 0.2)" } }
+              },
+              plugins: { legend: { labels: { color: "var(--text-color)" } } }
+            }} />
+          </div>
         </div>
 
         <div style={cardStyle}>
           <h3>Category Distribution</h3>
-          <Pie data={pieData} />
+          <div style={{ height: "300px", display: "flex", justifyContent: "center" }}>
+            <Pie data={pieData} options={{
+              maintainAspectRatio: false,
+              plugins: { legend: { labels: { color: "var(--text-color)" } } }
+            }} />
+          </div>
         </div>
       </div>
     </section>
@@ -221,7 +240,7 @@ const grid = {
 };
 
 const cardStyle = {
-  background: "#fff",
+  background: "var(--card-bg)",
   padding: "25px",
   borderRadius: "14px",
   boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
@@ -231,7 +250,7 @@ const summaryCard = {
   marginBottom: "40px",
   padding: "30px",
   borderRadius: "16px",
-  background: "#fff",
+  background: "var(--card-bg)",
   boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
 };
 
@@ -246,7 +265,7 @@ const monthItem = {
   display: "flex",
   justifyContent: "space-between",
   padding: "10px",
-  background: "#f8fafc",
+  background: "var(--input-bg)",
   borderRadius: "8px",
   marginTop: "8px",
 };
@@ -254,7 +273,11 @@ const monthItem = {
 const improveCard = (good) => ({
   padding: "20px",
   borderRadius: "12px",
-  background: good ? "#ecfdf5" : "#fef2f2",
+  background: good === null ? "var(--input-bg)" : (good ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)"),
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
 });
 
 const improveText = (good) => ({

@@ -56,6 +56,8 @@ const CarbonCalculator = () => {
         data: [],
         borderWidth: 2,
         tension: 0.4,
+        borderColor: "#10b981",
+        backgroundColor: "rgba(16, 185, 129, 0.2)",
       },
     ],
   });
@@ -170,6 +172,8 @@ const CarbonCalculator = () => {
                   : saved.map((r) => r.total),
                 borderWidth: 2,
                 tension: 0.4,
+                borderColor: "#10b981",
+                backgroundColor: "rgba(16, 185, 129, 0.2)",
               },
             ],
           });
@@ -193,6 +197,8 @@ const CarbonCalculator = () => {
             data: records.length === 1 ? [0, records[0].total] : records.map((r) => r.total),
             borderWidth: 2,
             tension: 0.4,
+            borderColor: "#10b981",
+            backgroundColor: "rgba(16, 185, 129, 0.2)",
           },
         ],
       });
@@ -204,6 +210,12 @@ const CarbonCalculator = () => {
     if (totalCO2 > 100) return "⚠️ Your carbon footprint is HIGH.";
     if (totalCO2 > 50) return "⚠️ Your carbon footprint is MODERATE.";
     return "✅ Your carbon footprint is LOW.";
+  };
+
+  const getTotalColor = () => {
+    if (totalCO2 > 100) return "#ef4444";
+    if (totalCO2 > 50) return "#f59e0b";
+    return "#10b981";
   };
 
   const getTip = () => {
@@ -345,47 +357,56 @@ const CarbonCalculator = () => {
         Calculate
       </button>
 
-      {totalCO2 > 0 && (
+      {(Number(totalCO2) > 0 || records.length > 0) && (
         <div style={{ marginTop: "30px" }}>
           <div id="pdf-content">
-            <div className="pdf-block-avoid" style={{ padding: "20px", background: "var(--card-bg, #fff)", borderRadius: "10px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", marginBottom: "20px" }}>
-              <h3 style={{ textAlign: "center", marginBottom: "20px", marginTop: 0 }}>Your Carbon Report</h3>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>🚗 Transportation:</span> <strong>{transportCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>✈️ Flights:</span> <strong>{flightsCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>⚡ Electricity:</span> <strong>{electricityCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>🔥 LPG:</span> <strong>{lpgCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>♻️ Waste:</span> <strong>{wasteCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
-                <span>🥩 Meat/Diet:</span> <strong>{meatCO2} kg CO₂</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "20px" }}>
-                <span>🏠 <b>Home Energy:</b></span> <strong><b>{homeEnergyCO2} kg CO₂</b></strong>
-              </div>
+            {Number(totalCO2) > 0 && (
+              <div className="pdf-block-avoid" style={{ padding: "20px", background: "var(--card-bg, #fff)", borderRadius: "10px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", marginBottom: "20px" }}>
+                <h3 style={{ textAlign: "center", marginBottom: "20px", marginTop: 0 }}>Your Carbon Report</h3>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>🚗 Transportation:</span> <strong>{transportCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>✈️ Flights:</span> <strong>{flightsCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>⚡ Electricity:</span> <strong>{electricityCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>🔥 LPG:</span> <strong>{lpgCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>♻️ Waste:</span> <strong>{wasteCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e5e7eb", paddingBottom: "10px", marginBottom: "10px" }}>
+                  <span>🥩 Meat/Diet:</span> <strong>{meatCO2} kg CO₂</strong>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--input-border)", paddingBottom: "10px", marginBottom: "20px" }}>
+                  <span>🏠 <b>Home Energy:</b></span> <strong><b>{homeEnergyCO2} kg CO₂</b></strong>
+                </div>
 
-              <h3 style={{ textAlign: "center", fontSize: "24px", color: "#ef4444", marginBottom: "20px" }}>Total: {totalCO2} kg CO₂</h3>
+                <h3 style={{ textAlign: "center", fontSize: "24px", color: getTotalColor(), marginBottom: "20px" }}>Total: {totalCO2} kg CO₂</h3>
 
-              <div style={{ background: "var(--input-bg, #f3f4f6)", padding: "15px", borderRadius: "8px" }}>
-                <h4 style={{ margin: "0 0 10px 0" }}>📊 Insights</h4>
-                <p style={{ margin: "0 0 5px 0" }}>{getInsight()}</p>
-                <p style={{ margin: 0 }}>{getTip()}</p>
+                <div style={{ background: "var(--input-bg, #f3f4f6)", padding: "15px", borderRadius: "8px", border: "1px solid var(--input-border)" }}>
+                  <h4 style={{ margin: "0 0 10px 0" }}>📊 Insights</h4>
+                  <p style={{ margin: "0 0 5px 0" }}>{getInsight()}</p>
+                  <p style={{ margin: 0 }}>{getTip()}</p>
+                </div>
               </div>
-            </div>
+            )}
 
             {records.length > 0 && (
-              <div className="pdf-block-avoid" style={{ padding: "20px", background: "var(--card-bg, #fff)", borderRadius: "10px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", backgroundColor: '#ffffff' }}>
+              <div className="pdf-block-avoid" style={{ padding: "20px", background: "var(--card-bg, #fff)", borderRadius: "10px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
                 <h3 style={{ textAlign: "center" }}>📈 Carbon Footprint Trend</h3>
-                <div style={{ background: 'white', padding: "10px" }}>
-                  <Line data={chartData} options={{ animation: false }} />
+                <div style={{ padding: "10px" }}>
+                  <Line data={chartData} options={{
+                    animation: false,
+                    scales: {
+                      x: { ticks: { color: "var(--text-color)" }, grid: { color: "rgba(156, 163, 175, 0.2)" } },
+                      y: { ticks: { color: "var(--text-color)" }, grid: { color: "rgba(156, 163, 175, 0.2)" } }
+                    },
+                    plugins: { legend: { labels: { color: "var(--text-color)" } } }
+                  }} />
                 </div>
               </div>
             )}

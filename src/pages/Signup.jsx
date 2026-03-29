@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
+import { ArrowLeft, Leaf } from "lucide-react";
+import "./Auth.css";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -67,54 +69,89 @@ export default function Signup() {
   };
 
   return (
-    <div className="signup-bg">
-      <div className="signup-container">
-        <form onSubmit={handleSignup}>
-          <h2>Create an Account</h2>
+    <div className="auth-bg signup">
+      <nav className="auth-nav">
+        <Link to="/" className="auth-logo">
+          Carbon Footprint Tracker
+        </Link>
+      </nav>
 
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+      <div className="auth-container">
+        <div className="auth-header">
+          <span>STEP INTO THE ECOSYSTEM</span>
+          <h1>Create Account</h1>
+        </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <form onSubmit={handleSignup} className="auth-form">
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <button type="submit" style={{ width: "100%" }}>
-            Signup
-          </button>
-
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "15px", marginBottom: "5px" }}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => alert("Google Auth Failed")}
+          <div className="form-group">
+            <label>FULL NAME</label>
+            <input
+              type="text"
+              className="auth-input"
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
-          <p>
-            Already have an account?{" "}
-            <Link to="/login">
-              <b>Login</b>
-            </Link>
-          </p>
+          <div className="form-group">
+            <label>EMAIL ADDRESS</label>
+            <input
+              type="email"
+              className="auth-input"
+              placeholder="nature@ecotrack.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
+          <div className="form-group">
+            <label>CREATE PASSWORD</label>
+            <input
+              type="password"
+              className="auth-input"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="auth-submit">
+            Sign Up
+          </button>
+
+          <div className="auth-divider">
+            OR SIGN UP WITH
+          </div>
+
+          <div className="social-auth">
+            <div className="google-wrapper">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => alert("Google Auth Failed")}
+                theme="filled_black"
+                shape="rectangular"
+                text="signin_with"
+                size="large"
+              />
+            </div>
+          </div>
+
+          <div className="auth-footer">
+            Already have an account? <Link to="/login">Log In</Link>
+          </div>
         </form>
+
+        <div className="auth-terms">
+          <div className="links">
+            <Link to="/terms">Terms of Service</Link>
+            <Link to="/privacy">Privacy Policy</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

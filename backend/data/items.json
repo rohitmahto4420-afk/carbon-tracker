@@ -1,0 +1,18 @@
+{
+  "chicken": { "category": "meat", "carbon": 6.0 },
+  "meat": { "category": "meat", "carbon": 6.0 },
+  "beef": { "category": "meat", "carbon": 27.0 },
+  "pork": { "category": "meat", "carbon": 12.1 },
+  "milk": { "category": "dairy", "carbon": 2.0 },
+  "cheese": { "category": "dairy", "carbon": 13.5 },
+  "rice": { "category": "grain", "carbon": 1.0 },
+  "bread": { "category": "grain", "carbon": 0.8 },
+  "soap": { "category": "household", "carbon": 0.5 },
+  "tomato": { "category": "veg", "carbon": 0.4 },
+  "potato": { "category": "veg", "carbon": 0.3 },
+  "salad": { "category": "veg", "carbon": 0.5 },
+  "pizza": { "category": "fast_food", "carbon": 5.0 },
+  "burger": { "category": "fast_food", "carbon": 6.5 },
+  "biryani": { "category": "meals", "carbon": 4.5 },
+  "thali": { "category": "meals", "carbon": 3.0 }
+}

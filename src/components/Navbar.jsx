@@ -9,6 +9,8 @@ export default function Navbar() {
     localStorage.getItem("theme") || "light"
   );
 
+  const [menuOpen, setMenuOpen] = useState(false); // ✅ NEW
+
   useEffect(() => {
     if (theme === "dark") {
       document.body.classList.add("dark-mode");
@@ -22,10 +24,9 @@ export default function Navbar() {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // ✅ Better logout (clears user session)
   const handleLogout = () => {
     localStorage.removeItem("userId");
-    localStorage.removeItem("token"); // if you use JWT
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -37,27 +38,28 @@ export default function Navbar() {
         </Link>
       </h2>
 
-      <ul className="nav-links">
-        <li><Link to="/home">Home</Link></li>
-        <li><Link to="/calculator">Calculator</Link></li>
-        <li><Link to="/history">History</Link></li>
-        <li><Link to="/graph">Graph</Link></li>
-        <li><Link to="/challenges">Challenges</Link></li>
-        <li><Link to="/tips">Tips</Link></li>
-        <li><Link to="/records">Records</Link></li>
+      {/* 🍔 Hamburger */}
+      <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
 
-        {/* 🌙 Theme Toggle */}
+      <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+        <li><Link to="/home" onClick={() => setMenuOpen(false)}>Home</Link></li>
+        <li><Link to="/calculator" onClick={() => setMenuOpen(false)}>Calculator</Link></li>
+        <li><Link to="/history" onClick={() => setMenuOpen(false)}>History</Link></li>
+        <li><Link to="/graph" onClick={() => setMenuOpen(false)}>Graph</Link></li>
+        <li><Link to="/challenges" onClick={() => setMenuOpen(false)}>Challenges</Link></li>
+        <li><Link to="/tips" onClick={() => setMenuOpen(false)}>Tips</Link></li>
+        <li><Link to="/records" onClick={() => setMenuOpen(false)}>Records</Link></li>
+
+        {/* Theme Toggle */}
         <li>
-          <button
-            onClick={toggleTheme}
-            className="theme-toggle"
-            aria-label="Toggle Dark Mode"
-          >
+          <button onClick={toggleTheme} className="theme-toggle">
             {theme === "light" ? "🌙" : "☀️"}
           </button>
         </li>
 
-        {/* 🔐 Logout */}
+        {/* Logout */}
         <li>
           <button onClick={handleLogout} className="logout-btn">
             Logout

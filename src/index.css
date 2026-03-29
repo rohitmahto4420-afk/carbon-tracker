@@ -1,28 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import './layout.css';
 
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --bg-color: #f8fafc;
-  --text-color: #1e293b;
-  --card-bg: #ffffff;
-  --input-bg: #ffffff;
-  --input-border: #cbd5e1;
-  --navbar-bg: #0f4d3a;
+  --bg-color: #F4F3EA;
+  --bg-sidebar: #EAE6D6;
+  --text-color: #1F2924;
+  --text-muted: #7E8C82;
+  --card-bg: #FFFFFF;
+  --card-dark: #002B20;
+  --input-bg: #FFFFFF;
+  --input-border: #D1D5DB;
+  --navbar-bg: #F4F3EA;
+  --btn-primary: #063B27;
+  --btn-light: #B4E3C9;
   --glass-bg: rgba(255, 255, 255, 0.6);
   --glass-border: rgba(255, 255, 255, 0.8);
-  --glass-text: #1e293b;
+  --glass-text: #1F2924;
+  --brand-green: #063B27;
+  --accent-green: #B4E3C9;
 }
 
 body.dark-mode {
-  --bg-color: #0f172a;
-  --text-color: #f1f5f9;
-  --card-bg: #1e293b;
+  --bg-color: #0F172A;
+  --bg-sidebar: #1E293B;
+  --text-color: #F1F5F9;
+  --text-muted: #94A3B8;
+  --card-bg: #1E293B;
+  --card-dark: #002B20;
   --input-bg: #334155;
   --input-border: #475569;
-  --navbar-bg: #064e3b;
+  --navbar-bg: #0F172A;
+  --btn-primary: #10B981;
+  --btn-light: #064E3B;
+  --brand-green: #10B981;
   --glass-bg: rgba(30, 41, 59, 0.7);
   --glass-border: rgba(71, 85, 105, 0.4);
   --glass-text: #f8fafc;
@@ -65,7 +79,6 @@ button {
   min-height: 100vh;
   background-color: var(--bg-color);
   position: relative;
-  overflow-x: hidden;
   transition: background-color 0.3s ease;
 }
 
@@ -246,4 +259,132 @@ button {
 .calculator-box button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25);
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE DESIGN */
+/* ========================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .home-section {
+    padding: 40px 16px;
+  }
+
+  .glass-panel {
+    padding: 30px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .home-section {
+    padding: 30px 14px;
+  }
+
+  .glass-panel {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .signup-container form {
+    padding: 25px;
+    border-radius: 12px;
+  }
+
+  .calculator-box {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .center {
+    margin: 60px 10px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  input, textarea, select {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .signup-container form {
+    padding: 20px;
+  }
+
+  .signup-container h2 {
+    font-size: 20px;
+  }
+
+  .glass-panel {
+    padding: 16px;
+  }
+}
+
+/* Ultra small devices */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.4rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+/* 📱 Mobile Fix for Signup */
+
+@media (max-width: 768px) {
+  .signup-bg {
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .signup-container {
+    width: 100%;
+  }
+
+  .signup-container form {
+    width: 100%;
+    max-width: 100%;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container form {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .signup-container h2 {
+    font-size: 20px;
+  }
 }

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { Leaf } from "lucide-react";
+import "./Auth.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -8,7 +10,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // ✅ LOGIN (Render API)
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -45,7 +46,6 @@ export default function Login() {
     }
   };
 
-  // ✅ GOOGLE LOGIN (Render API)
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const res = await fetch(
@@ -79,93 +79,81 @@ export default function Login() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #c6f6d5, #b2f5ea)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <form
-        onSubmit={handleLogin}
-        style={{
-          width: "420px",
-          background: "#ffffff",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Welcome Back
-        </h2>
+    <div className="auth-bg login">
+      <nav className="auth-nav">
+        <Link to="/" className="auth-logo">
+          <Leaf size={24} color="#7FE57F" /> Carbon Footprint Tracker
+        </Link>
+      </nav>
 
-        <input
-          type="email"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={inputStyle}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={inputStyle}
-        />
-
-        {/* ✅ Forgot Password (added back) */}
-        <div style={{ textAlign: "right", marginBottom: "15px" }}>
-          <Link
-            to="/reset-password"
-            style={{ fontSize: "14px", color: "#059669" }}
-          >
-            Forgot Password?
-          </Link>
+      <div className="auth-container">
+        <div className="auth-header">
+          <h1>Welcome Back</h1>
+          <p>Continue your journey toward a sustainable lifestyle and track your daily impact.</p>
         </div>
 
-        <button type="submit" style={buttonStyle}>
-          Login
-        </button>
+        <form onSubmit={handleLogin} className="auth-form">
 
-        {/* GOOGLE LOGIN */}
-        <div style={{ display: "flex", justifyContent: "center", margin: "15px 0" }}>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => console.log("Google Login Failed")}
-          />
+          <div className="form-group">
+            <label>EMAIL ADDRESS</label>
+            <input
+              type="email"
+              className="auth-input"
+              placeholder="name@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>
+              PASSWORD
+              <Link to="/reset-password">Forgot Password?</Link>
+            </label>
+            <input
+              type="password"
+              className="auth-input"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="auth-submit">
+            Log In
+          </button>
+
+          <div className="auth-divider">
+            OR LOG IN WITH
+          </div>
+
+          <div className="social-auth">
+            <div className="google-wrapper">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => console.log("Google Login Failed")}
+                theme="filled_black"
+                shape="rectangular"
+                text="signin_with"
+                size="large"
+              />
+            </div>
+          </div>
+
+          <div className="auth-footer">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </div>
+        </form>
+
+        <div className="auth-terms">
+          <div className="links">
+            <Link to="/terms">Terms of Service</Link>
+            <Link to="/privacy">Privacy Policy</Link>
+          </div>
         </div>
-
-        <p style={{ textAlign: "center" }}>
-          New user? <Link to="/signup">Signup</Link>
-        </p>
-      </form>
+      </div>
     </div>
   );
 }
-
-// --- STYLES ---
-const inputStyle = {
-  width: "100%",
-  padding: "12px",
-  marginBottom: "15px",
-  borderRadius: "6px",
-  border: "1px solid #ddd",
-};
-
-const buttonStyle = {
-  width: "100%",
-  padding: "12px",
-  background: "linear-gradient(90deg, #2f855a, #48bb78)",
-  color: "#fff",
-  border: "none",
-  cursor: "pointer",
-  fontSize: "16px",
-  borderRadius: "6px",
-};

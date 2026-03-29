@@ -54,4 +54,27 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.post("/simulate", async (req, res) => {
+  try {
+    const { daily_emission, improvement_level, duration } = req.body;
+    
+    // Check missing params
+    if (daily_emission === undefined || improvement_level === undefined || duration === undefined) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const future_emission = daily_emission * duration;
+    const reduced_emission = future_emission - (future_emission * (improvement_level / 100));
+    const saved = future_emission - reduced_emission;
+
+    res.json({
+      current: Number(future_emission.toFixed(2)),
+      improved: Number(reduced_emission.toFixed(2)),
+      saved: Number(saved.toFixed(2)),
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Simulation failed", error: err });
+  }
+});
+
 module.exports = router;

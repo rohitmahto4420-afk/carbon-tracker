@@ -6,6 +6,8 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
 const carbonRoutes = require("./routes/carbon");
+const scannerRoutes = require("./routes/scanner");
+const monthlySummaryRoutes = require("./routes/monthlySummary");
 
 const app = express();
 
@@ -14,11 +16,17 @@ app.use(express.json());
 
 // ✅ Use ENV variable here
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
+  .then(() => {
+    console.log("MongoDB Connected ✅");
+    console.log("Connected DB:", mongoose.connection.name); // ✅ FIXED
+  })
   .catch((err) => console.log("Mongo Error ❌:", err));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/carbon", carbonRoutes);
+app.use("/api/scanner", scannerRoutes);
+app.use("/api/monthly-summary", monthlySummaryRoutes);
+console.log("Connected DB:", require("mongoose").connection.name);
 
 // ✅ Use ENV PORT
 const PORT = process.env.PORT || 5000;

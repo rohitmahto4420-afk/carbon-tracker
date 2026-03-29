@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Leaf } from "lucide-react";
+import "./Auth.css";
 
 export default function ResetPassword() {
     const navigate = useNavigate();
@@ -11,7 +13,7 @@ export default function ResetPassword() {
         e.preventDefault();
 
         try {
-            const response = await fetch("carbon-tracker-d2d8.onrender.com/api/auth/reset-password", {
+            const response = await fetch("https://carbon-tracker-d2d8.onrender.com/api/auth/reset-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -34,39 +36,51 @@ export default function ResetPassword() {
     };
 
     return (
-        <div className="login-bg">
-            <div className="signup-container">
-                <form onSubmit={handleReset}>
-                    <h2>Reset Password</h2>
+        <div className="auth-bg login">
+            <nav className="auth-nav">
+                <Link to="/" className="auth-logo">
+                    <Leaf size={24} color="#7FE57F" /> Carbon Footprint Tracker
+                </Link>
+            </nav>
 
-                    <p style={{ textAlign: "center", marginBottom: "20px", color: "var(--text-color, #475569)" }}>
-                        Enter your email and a new password below.
-                    </p>
+            <div className="auth-container">
+                <div className="auth-header">
+                    <h1>Reset Password</h1>
+                    <p>Enter your email and a new password below.</p>
+                </div>
 
-                    <input
-                        type="email"
-                        placeholder="Email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                <form onSubmit={handleReset} className="auth-form">
+                    <div className="form-group">
+                        <label>EMAIL ADDRESS</label>
+                        <input
+                            type="email"
+                            className="auth-input"
+                            placeholder="name@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                    <input
-                        type="password"
-                        placeholder="New Password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                        style={{ marginBottom: "20px" }}
-                    />
+                    <div className="form-group">
+                        <label>NEW PASSWORD</label>
+                        <input
+                            type="password"
+                            className="auth-input"
+                            placeholder="••••••••"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                    <button type="submit">
+                    <button type="submit" className="auth-submit">
                         Update Password
                     </button>
 
-                    <p style={{ marginTop: "15px", textAlign: "center" }}>
+                    <div className="auth-footer">
                         Remembered your password? <Link to="/login">Login</Link>
-                    </p>
+                    </div>
                 </form>
             </div>
         </div>

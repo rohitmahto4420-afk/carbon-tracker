@@ -1,0 +1,191 @@
+/* d:\One Derive\OneDrive\Desktop\final project\carbon-tracker\src\layout.css */
+.ecology-app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  width: 100%;
+}
+
+.ecology-sidebar {
+  width: 250px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  position: fixed;
+  height: 100vh;
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.sidebar-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--brand-green);
+  margin-bottom: 20px;
+}
+
+.sidebar-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.sidebar-version {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 40px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(0,0,0,0.03);
+}
+
+.nav-item.active {
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-right: 3px solid var(--brand-green);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.new-entry-btn {
+  width: 100%;
+  background-color: var(--btn-primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.new-entry-btn:hover {
+  opacity: 0.9;
+}
+
+.ecology-main-content {
+  flex-grow: 1;
+  margin-left: 250px; /* offset for fixed sidebar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ecology-topbar {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 20px;
+  padding: 8px 16px;
+  width: 300px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0 0 0 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-bar input:focus {
+  border: none;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 30px;
+}
+
+.topbar-link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 15px;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+.topbar-link:hover {
+  color: var(--text-color);
+}
+
+.topbar-link.active {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.ecology-page-container {
+  padding: 50px 60px 100px 60px;
+  flex-grow: 1;
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Base Card Styles */
+.eco-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
